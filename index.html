@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botão Vermelho</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        .red-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #ff0000;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .red-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.9);
+        }
+
+        .red-button:active {
+            transform: scale(0.95);
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-container {
+            width: 80%;
+            max-width: 800px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="btn-container">
+        <button class="red-button" id="redButton">APERTE AQUI</button>
+    </div>
+
+    <div class="video-modal" id="videoModal">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <div class="video-container">
+            <!-- Substitua "video.mp4" pelo nome do seu arquivo de vídeo -->
+            <video controls id="videoPlayer">
+                <source src="assets/video.mp4" type="video/mp4">
+                Seu navegador não suporta o elemento de vídeo.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const redButton = document.getElementById('redButton');
+            const videoModal = document.getElementById('videoModal');
+            const closeBtn = document.getElementById('closeBtn');
+            const videoPlayer = document.getElementById('videoPlayer');
+
+            // Abrir modal quando o botão vermelho for clicado
+            redButton.addEventListener('click', function() {
+                videoModal.style.display = 'flex';
+                videoPlayer.play();
+            });
+
+            // Fechar modal quando o botão de fechar for clicado
+            closeBtn.addEventListener('click', function() {
+                videoModal.style.display = 'none';
+                videoPlayer.pause();
+                videoPlayer.currentTime = 0;
+            });
+
+            // Fechar modal quando clicar fora do vídeo
+            videoModal.addEventListener('click', function(e) {
+                if (e.target === videoModal) {
+                    videoModal.style.display = 'none';
+                    videoPlayer.pause();
+                    videoPlayer.currentTime = 0;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
